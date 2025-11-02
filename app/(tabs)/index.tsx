@@ -1,10 +1,51 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, View, StatusBar } from "react-native";
+import Constants from "expo-constants";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import WebView from "react-native-webview";
 
+export default function HomeScreen() {
+  const isWeb = Platform.OS === "web";
+  return (
+    <View style={styles.container}>
+      {/* Safe Area Padding 적용 */}
+      <View
+        style={{
+          paddingTop: Constants.statusBarHeight,
+        }}
+      >
+        <StatusBar />
+      </View>
+
+      {isWeb ? (
+        <iframe
+          src="https://petqua.netlify.app/"
+          style={styles.webview}
+          title="WebView"
+        />
+      ) : (
+        <WebView
+          source={{ uri: "https://petqua.netlify.app/" }}
+          style={styles.webview}
+        />
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  webview: {
+    flex: 1,
+  },
+});
+
+/*
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
@@ -72,3 +113,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+*/
